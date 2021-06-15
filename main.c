@@ -5,7 +5,7 @@
 typedef int Player;
 Player you, computer;
 int score_you=0, score_computer=0;
-int count=0;
+int count=0, k = 0;
 
 int menu()
 {
@@ -32,6 +32,7 @@ void setup()
 
 void logic()
 {
+    startover:
     switch (you)
     {
         case 1:
@@ -50,6 +51,7 @@ void logic()
                 printf("You won\n");
                 printf("You = ROCK \t Computer = SCISSOR");
             }
+            count++;
             break;
         case 2:
             if(computer == 1)
@@ -67,6 +69,7 @@ void logic()
                 printf("Computer won\n");
                 printf("You = PAPER \t Computer = SCISSOR");
             }
+            count++;
             break;
         case 3:
             if(computer == 1)
@@ -84,6 +87,7 @@ void logic()
                 printf("Game draw\n");
                 printf("Both of you have choosen SCISSOR");
             }
+            count++;
             break;
         case 4:
             exit(0);
@@ -91,6 +95,7 @@ void logic()
     
         default:
             printf("Invalid choice, please try again ");
+            goto startover;
 
     }
 }
@@ -102,15 +107,22 @@ void game_name()
 
 int main()
 {
-    do
+    again:
+    printf("Enter the number of round you want to play: ");
+    scanf("%d",&k);
+    while(count != k)
     {
         game_name();
         setup();
         logic();
-    } while (0);
-    
-    
-
-    printf("Do you want to play again");
+    }
+    char ch;
+    fflush(stdin);
+    printf("\nDo you want to play again: ");
+    scanf("%c",&ch);
+    if(ch == 'y' || ch == 'Y')
+    {
+        goto again;
+    }
     return 0;
 }
